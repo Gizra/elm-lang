@@ -84,6 +84,12 @@ gulp.task("cname", function () {
     .pipe($.size({ title: "CNAME" }))
 });
 
+gulp.task("misc-assets", function () {
+  return gulp.src(["serve/assets/*"])
+    .pipe(gulp.dest("site/assets"))
+    .pipe($.size({ title: "Misc assets (logo and favicon)" }))
+});
+
 
 // Optimizes all the CSS, HTML and concats the JS etc
 gulp.task("html", ["styles"], function () {
@@ -182,7 +188,7 @@ gulp.task("check", ["jslint", "doctor"], function () {
 });
 
 // Builds the site but doesn"t serve it to you
-gulp.task("build", ["jekyll:prod", "styles"], function () {});
+gulp.task("build", ["jekyll:prod", "styles", "misc-assets"], function () {});
 
 // Builds your site with the "build" command and then runs all the optimizations on
 // it and outputs it to "./site"
