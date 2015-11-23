@@ -79,9 +79,9 @@ gulp.task("copy", function () {
 });
 
 gulp.task("cname", function () {
-  return gulp.src(["serve/CNAME"])
+  return gulp.src(["src/CNAME"])
     .pipe(gulp.dest("site"))
-    .pipe($.size({ title: "CNAMe" }))
+    .pipe($.size({ title: "CNAME" }))
 });
 
 
