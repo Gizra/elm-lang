@@ -1,4 +1,4 @@
-// Generated on 2015-11-23 using generator-jekyllized 0.7.3
+// Generated on 2015-05-04 using generator-jekyllized 0.7.3
 "use strict";
 
 var gulp = require("gulp");
@@ -73,10 +73,17 @@ gulp.task("fonts", function () {
 
 // Copy xml and txt files to the "site" directory
 gulp.task("copy", function () {
-  return gulp.src(["serve/*.txt", "serve/*.xml"])
+  return gulp.src(["serve/*.txt", "serve/*.xml", "serve/shoovify.sh"])
     .pipe(gulp.dest("site"))
-    .pipe($.size({ title: "xml & txt" }))
+    .pipe($.size({ title: "xml & txt & shoovify.sh" }))
 });
+
+gulp.task("cname", function () {
+  return gulp.src(["serve/CNAME"])
+    .pipe(gulp.dest("site"))
+    .pipe($.size({ title: "CNAMe" }))
+});
+
 
 // Optimizes all the CSS, HTML and concats the JS etc
 gulp.task("html", ["styles"], function () {
@@ -112,13 +119,13 @@ gulp.task("html", ["styles"], function () {
 
 
 // Task to upload your site to your personal GH Pages repo
-gulp.task("deploy", function () {
+gulp.task("deploy", ["publish"], function () {
   // Deploys your optimized site, you can change the settings in the html task if you want to
   return gulp.src("./site/**/*")
     .pipe($.ghPages({
       // Currently only personal GitHub Pages are supported so it will upload to the master
       // branch and automatically overwrite anything that is in the directory
-      branch: "master"
+      branch: "gh-pages"
       }));
 });
 
@@ -180,5 +187,5 @@ gulp.task("build", ["jekyll:prod", "styles"], function () {});
 // Builds your site with the "build" command and then runs all the optimizations on
 // it and outputs it to "./site"
 gulp.task("publish", ["build"], function () {
-  gulp.start("html", "copy", "images", "fonts");
+  gulp.start("html", "copy", "cname", "images", "fonts");
 });
